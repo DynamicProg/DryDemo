@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.android.eng.drydemo.MainActivity">
+    tools:context="com.android.eng.drydemo.Activity.MainActivity">
 
     <ImageView
         android:id="@+id/image_view"
@@ -19,18 +19,18 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_go_last"
+            android:id="@+id/btn_fresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Last" />
+            android:text="Fresh" />
 
         <Button
-            android:id="@+id/btn_go_next"
+            android:id="@+id/btn_show"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Next" />
+            android:text="Show" />
 
     </LinearLayout>
 

@@ -1,4 +1,4 @@
-package com.android.eng.drydemo;
+package com.android.eng.drydemo.Utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
