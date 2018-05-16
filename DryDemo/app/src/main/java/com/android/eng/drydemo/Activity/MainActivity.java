@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.android.eng.drydemo.ImageLoader.SisterLoader;
 import com.android.eng.drydemo.Model.Sister;
 import com.android.eng.drydemo.Network.SisterApi;
 import com.android.eng.drydemo.Utils.PictureLoader;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private SisterApi sisterApi;
     private PictureLoader pictureloader;
+    private SisterLoader mLoader;
     private SisterTask sisterTask;
 
     @Override
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         sisterApi = new SisterApi();
         pictureloader = new PictureLoader();
+        mLoader = SisterLoader.getInstance(this);
         initData();
         initUI();
     }
@@ -60,35 +63,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_fresh:
-                page++;
-                Log.d(TAG, "onClick: page - " + page);
-                sisterTask = new SisterTask(page);
-                sisterTask.execute();
-                curPos = 0;
+                if (curPos == 0) {
+                    btnFresh.setVisibility(View.INVISIBLE);
+                    break;
+                }
+                --curPos;
+                if (curPos == sisterList.size() - 1) {
+                    sisterTask = new SisterTask();
+                    sisterTask.execute();
+                } else if (curPos < sisterList.size()) {
+                    mLoader.bindBitmap(sisterList.get(curPos).getUrl(),
+                            imgShow, 400, 400);
+                }
                 break;
             case R.id.btn_show:
-                if (sisterList != null && !sisterList.isEmpty()) {
-                    if (curPos > 9) {
-                        curPos = 0;
-                    }
-                    Log.d(TAG, "onClick: pos - " + curPos);
-                    pictureloader.load(imgShow, sisterList.get(curPos).getUrl());
-                    curPos++;
+                btnFresh.setVisibility(View.VISIBLE);
+                if (curPos < sisterList.size()) {
+                    ++curPos;
                 }
+                if (curPos >= sisterList.size()) {
+                    sisterTask = new SisterTask();
+                    sisterTask.execute();
+                } else if (curPos < sisterList.size())
+                    mLoader.bindBitmap(sisterList.get(curPos).getUrl(),
+                            imgShow, 400, 400);
                 break;
         }
     }
 
     private class SisterTask extends AsyncTask<Void, Void, ArrayList<Sister>> {
-        private int page;
-
-        public SisterTask(int page) {
-            this.page = page;
+        public SisterTask() {
         }
 
         @Override
         protected ArrayList<Sister> doInBackground(Void... params) {
             Log.d(TAG, "doInBackground: ");
+            if (page < (curPos + 1) / 10 + 1) {
+                ++page;
+            }
             return sisterApi.fetchSister(10, page);
         }
 
@@ -104,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onCancelled();
             sisterTask = null;
         }
+
     }
 
     @Override
