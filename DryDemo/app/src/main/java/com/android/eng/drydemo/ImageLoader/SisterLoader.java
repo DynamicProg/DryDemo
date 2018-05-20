@@ -40,7 +40,7 @@ public class SisterLoader {
     private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors(); // cup num
     private static final int CORE_POOL_SIZE = CPU_COUNT + 1; // core thread num
     private static final int MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1; // max thread pool num
-    private static final long KEEP_ALIVE = 10L; // threa idle time
+    private static final long KEEP_ALIVE = 10L; // thread idle time
 
     private Context mContext;
     private MemoryCacheHelper mMemHelper;
@@ -93,7 +93,7 @@ public class SisterLoader {
             return bitmap;
         }
         try {
-            bitmap = mDiskHelper.loadBitmapFromDiskCache(key, reqHeight, reqHeight);
+            bitmap = mDiskHelper.loadBitmapFromDiskCache(key, reqWidth, reqHeight);
             // get bitmap from disk, add to mem cache
             if (bitmap != null) {
                 mMemHelper.addBitmapToMemCache(key, bitmap);
