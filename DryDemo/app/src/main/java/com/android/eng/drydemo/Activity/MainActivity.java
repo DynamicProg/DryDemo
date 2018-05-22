@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sisterApi = new SisterApi();
         pictureloader = new PictureLoader();
         mLoader = SisterLoader.getInstance(this);
-        mDBHelper = SisterDBHelper.getsInstance(this);
+        mDBHelper = SisterDBHelper.getsInstance();
         initData();
         initUI();
     }

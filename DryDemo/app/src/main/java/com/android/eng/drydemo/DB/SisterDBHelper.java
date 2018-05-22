@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.android.eng.drydemo.DryDemoApp;
 import com.android.eng.drydemo.Model.Sister;
 
 import java.util.ArrayList;
@@ -23,15 +24,15 @@ public class SisterDBHelper {
     private SisterOpenHelper mOpenHelper;
     private SQLiteDatabase db;
 
-    public SisterDBHelper(Context context) {
-        mOpenHelper = new SisterOpenHelper(context.getApplicationContext());
+    public SisterDBHelper() {
+        mOpenHelper = new SisterOpenHelper(DryDemoApp.getContext());
     }
 
-    public static SisterDBHelper getsInstance(Context context) {
+    public static SisterDBHelper getsInstance() {
         if (sInstance == null) {
             synchronized (SisterDBHelper.class) {
                 if (sInstance == null) {
-                    sInstance = new SisterDBHelper(context);
+                    sInstance = new SisterDBHelper();
                 }
             }
         }
