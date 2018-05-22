@@ -63,7 +63,7 @@ public class SisterApi {
             sister.setSource(res.optString(ServerInfo.source));
             sister.setType(res.optString(ServerInfo.type));
             sister.setUrl(res.optString(ServerInfo.url));
-            sister.setUsed(res.optBoolean(ServerInfo.used));
+            sister.setUsed(res.optBoolean(ServerInfo.used) ? 1 : 0);
             sister.setWho(res.optString(ServerInfo.who));
             sisters.add(sister);
         }
